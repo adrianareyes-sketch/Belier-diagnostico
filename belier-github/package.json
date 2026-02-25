@@ -1,6 +1,7 @@
 {
   "name": "belier-diagnostico",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,6 +13,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^7.3.1"
+    "vite": "^5.4.0"
   }
 }
