@@ -4,615 +4,664 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diagnóstico de Uñas · Belier</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FAF7F2;
-    --blush: #E8C4B8;
-    --rose: #C4846E;
-    --deep: #3D2B27;
-    --gold: #B8965A;
-    --muted: #8A7068;
+    --lila: #6B3FA0;
+    --lila-deep: #4a2070;
+    --lila-mid: #8B5CC8;
+    --lila-light: #c9a8e8;
+    --lila-pale: #f2eaf9;
+    --lila-soft: #e8d8f5;
+    --dark: #1e1028;
+    --white: #ffffff;
+    --green-wa: #25D366;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--cream);
-    color: var(--deep);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--lila-pale); color: var(--dark); min-height: 100vh; }
 
   /* HEADER */
-  header {
-    text-align: center;
-    padding: 48px 24px 32px;
-    border-bottom: 1px solid var(--blush);
+  .header {
+    background: var(--lila-deep);
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
   }
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--rose);
-    margin-bottom: 8px;
+  .header::before {
+    content: ''; position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.04); border-radius: 50%;
   }
-  header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--deep);
-    line-height: 1.2;
-  }
-  header p {
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: white; letter-spacing: 3px; position: relative; z-index: 1; text-align: center; }
+  .logo span { font-size: 11px; display: block; color: var(--lila-light); letter-spacing: 5px; font-family: 'DM Sans', sans-serif; font-weight: 300; text-transform: uppercase; }
 
-  /* MAIN */
-  main {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
+  /* SCREENS */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* STEPS */
-  .step { display: none; animation: fadeIn 0.4s ease; }
-  .step.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, var(--lila-deep) 0%, var(--lila) 60%, var(--lila-mid) 100%);
+    padding: 52px 24px 68px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before { content: '💅'; position: absolute; font-size: 140px; opacity: 0.05; top: -10px; right: -20px; }
+  .hero::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 32px; background: var(--lila-pale); border-radius: 32px 32px 0 0;
+  }
+  .hero-badge {
+    display: inline-block; background: rgba(255,255,255,0.15); color: var(--lila-light);
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 30px; margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: white; margin-bottom: 14px; line-height: 1.2; font-weight: 600; }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.78); max-width: 320px; margin: 0 auto 32px; line-height: 1.7; }
+  .btn-start {
+    background: white; color: var(--lila-deep); border: none;
+    padding: 15px 38px; border-radius: 50px; font-size: 15px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.5px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    position: relative; z-index: 1; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
 
-  /* STEP INDICATOR */
-  .steps-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 40px;
-  }
-  .step-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--blush);
-    transition: all 0.3s;
-  }
-  .step-dot.active { background: var(--rose); transform: scale(1.3); }
-  .step-dot.done { background: var(--gold); }
+  /* PROGRESS */
+  .progress-wrap { padding: 20px 24px 0; max-width: 480px; margin: 0 auto; }
+  .progress-bar { background: var(--lila-soft); border-radius: 10px; height: 6px; margin-top: 10px; }
+  .progress-fill { background: linear-gradient(90deg, var(--lila-mid), var(--lila-light)); height: 6px; border-radius: 10px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: var(--lila); font-weight: 500; }
 
-  /* UPLOAD AREA */
-  .upload-area {
-    border: 1.5px dashed var(--blush);
-    border-radius: 4px;
-    padding: 60px 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .upload-area:hover { border-color: var(--rose); background: rgba(232,196,184,0.08); }
-  .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .upload-icon { font-size: 36px; margin-bottom: 16px; }
-  .upload-area h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .upload-area p { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
-  .preview-img {
-    width: 100%; max-height: 280px;
-    object-fit: cover; border-radius: 4px;
-    display: none; margin-bottom: 16px;
-  }
-
-  /* QUESTIONS */
-  .question-block { margin-bottom: 32px; }
-  .question-block label {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    font-weight: 400;
-    margin-bottom: 14px;
-    color: var(--deep);
-  }
-  .options { display: flex; flex-wrap: wrap; gap: 10px; }
+  /* QUESTION */
+  .question-wrap { padding: 24px 20px; max-width: 480px; margin: 0 auto; }
+  .question-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--lila-deep); margin-bottom: 8px; font-weight: 600; line-height: 1.3; }
+  .question-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 12px; }
   .option-btn {
-    padding: 9px 18px;
-    border: 1px solid var(--blush);
-    background: transparent;
-    border-radius: 2px;
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    color: var(--deep);
-    cursor: pointer;
-    transition: all 0.2s;
+    background: white; border: 2px solid var(--lila-soft); border-radius: 16px;
+    padding: 16px 20px; font-size: 14px; color: var(--dark); cursor: pointer;
+    text-align: left; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 12px;
   }
-  .option-btn:hover { border-color: var(--rose); color: var(--rose); }
-  .option-btn.selected { background: var(--rose); border-color: var(--rose); color: white; }
-
-  /* BUTTONS */
-  .btn-primary {
-    display: block;
-    width: 100%;
-    padding: 16px;
-    background: var(--deep);
-    color: var(--cream);
-    border: none;
-    border-radius: 2px;
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 32px;
-  }
-  .btn-primary:hover { background: var(--rose); }
-  .btn-primary:disabled { background: var(--blush); cursor: not-allowed; }
-  .btn-secondary {
-    display: inline-block;
-    padding: 12px 24px;
-    border: 1px solid var(--deep);
-    background: transparent;
-    color: var(--deep);
-    border-radius: 2px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 16px;
-  }
-  .btn-secondary:hover { background: var(--deep); color: var(--cream); }
+  .option-btn:hover { border-color: var(--lila-mid); background: var(--lila-pale); }
+  .option-btn.selected { border-color: var(--lila); background: var(--lila-soft); color: var(--lila-deep); font-weight: 600; }
+  .option-emoji { font-size: 22px; flex-shrink: 0; }
 
   /* LOADING */
-  .loading {
-    text-align: center;
-    padding: 60px 24px;
-  }
-  .spinner {
-    width: 40px; height: 40px;
-    border: 2px solid var(--blush);
-    border-top-color: var(--rose);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 24px;
-  }
+  .loading-wrap { padding: 60px 24px; text-align: center; max-width: 480px; margin: 0 auto; }
+  .spinner { width: 52px; height: 52px; border: 4px solid var(--lila-soft); border-top-color: var(--lila); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 24px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loading h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 300;
-    font-style: italic;
-    margin-bottom: 8px;
-  }
-  .loading p { font-size: 12px; color: var(--muted); }
+  .loading-wrap h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--lila-deep); margin-bottom: 10px; }
+  .loading-wrap p { font-size: 13px; color: #888; line-height: 1.6; }
 
   /* RESULTS */
-  .result-header { text-align: center; margin-bottom: 40px; }
-  .result-header .tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    padding: 4px 12px;
-    border-radius: 2px;
-    margin-bottom: 16px;
+  .results-hero {
+    background: linear-gradient(160deg, var(--lila-deep), var(--lila));
+    padding: 36px 24px 52px; text-align: center; position: relative;
   }
-  .result-header h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.3;
+  .results-hero::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 32px; background: var(--lila-pale); border-radius: 32px 32px 0 0;
   }
+  .results-hero h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: white; margin-bottom: 8px; font-weight: 600; }
+  .results-hero p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; max-width: 300px; margin: 0 auto; }
 
-  .diagnostico-box {
-    background: white;
-    border-left: 3px solid var(--rose);
-    padding: 20px 24px;
-    margin-bottom: 32px;
-    border-radius: 0 4px 4px 0;
-  }
-  .diagnostico-box p { font-size: 14px; line-height: 1.7; color: var(--deep); }
+  .results-wrap { padding: 24px 20px 40px; max-width: 480px; margin: 0 auto; }
+  .results-section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--lila-deep); margin-bottom: 16px; font-weight: 600; }
 
-  .section-title {
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--blush);
+  .product-card {
+    background: white; border-radius: 20px; padding: 20px; margin-bottom: 14px;
+    box-shadow: 0 4px 20px rgba(107,63,160,0.09); border-left: 4px solid var(--lila-mid);
+    animation: fadeIn 0.5s ease;
   }
+  .product-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+  .product-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--lila-soft), var(--lila-pale));
+    display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .product-meta { flex: 1; }
+  .product-label {
+    display: inline-block; background: var(--lila-soft); color: var(--lila);
+    font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .product-name { font-size: 15px; font-weight: 700; color: var(--lila-deep); line-height: 1.3; }
+  .product-desc { font-size: 13px; color: #666; line-height: 1.55; margin-bottom: 14px; }
+  .btn-wa {
+    background: var(--green-wa); color: white; border: none;
+    padding: 11px 20px; border-radius: 50px; font-size: 13px; font-weight: 700;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s; width: 100%; justify-content: center;
+  }
+  .btn-wa:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
 
-  .problemas { margin-bottom: 32px; }
-  .problema-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(232,196,184,0.4);
-    font-size: 13px;
-    color: var(--deep);
+  .ai-analysis {
+    background: linear-gradient(135deg, var(--lila-soft), var(--lila-pale));
+    border-radius: 16px; padding: 18px 20px; margin-bottom: 20px;
+    border: 1px solid var(--lila-light);
   }
-  .problema-item::before {
-    content: '·';
-    color: var(--rose);
-    font-size: 20px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: -2px;
-  }
+  .ai-analysis h3 { font-size: 13px; font-weight: 700; color: var(--lila-deep); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .ai-analysis p { font-size: 13px; color: #555; line-height: 1.65; }
 
-  .productos { margin-bottom: 32px; }
-  .producto-card {
-    background: white;
-    border: 1px solid var(--blush);
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 12px;
-    transition: all 0.2s;
+  .btn-restart {
+    width: 100%; background: transparent; border: 2px solid var(--lila-mid);
+    color: var(--lila); padding: 13px; border-radius: 50px; font-size: 14px;
+    font-weight: 700; cursor: pointer; margin-top: 10px; transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
   }
-  .producto-card:hover { border-color: var(--rose); box-shadow: 0 4px 20px rgba(196,132,110,0.1); }
-  .producto-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-  .producto-nombre {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--deep);
-  }
-  .prioridad {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  .prioridad.alta { background: rgba(196,132,110,0.15); color: var(--rose); }
-  .prioridad.media { background: rgba(184,150,90,0.15); color: var(--gold); }
-  .prioridad.baja { background: rgba(138,112,104,0.1); color: var(--muted); }
-  .producto-razon { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .btn-restart:hover { background: var(--lila-soft); }
 
-  .consejo-box {
-    background: linear-gradient(135deg, rgba(232,196,184,0.2), rgba(184,150,90,0.1));
-    border: 1px solid var(--blush);
-    border-radius: 4px;
-    padding: 20px 24px;
-    margin-bottom: 32px;
+  /* PHOTO UPLOAD */
+  .photo-wrap { padding: 24px 20px; max-width: 480px; margin: 0 auto; }
+  .upload-area {
+    border: 2px dashed var(--lila-light); border-radius: 20px; padding: 40px 20px;
+    text-align: center; background: white; cursor: pointer; transition: all 0.2s; margin-bottom: 20px;
   }
-  .consejo-box p { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; line-height: 1.7; }
-
-  .cta-box {
-    text-align: center;
-    padding: 32px;
-    background: var(--deep);
-    border-radius: 4px;
-    color: var(--cream);
+  .upload-area:hover { border-color: var(--lila); background: var(--lila-pale); }
+  .upload-area .upload-icon { font-size: 48px; margin-bottom: 12px; }
+  .upload-area h3 { font-size: 16px; font-weight: 700; color: var(--lila-deep); margin-bottom: 6px; }
+  .upload-area p { font-size: 13px; color: #888; line-height: 1.5; }
+  .upload-area input { display: none; }
+  .photo-preview { width: 100%; border-radius: 16px; max-height: 220px; object-fit: cover; margin-bottom: 16px; display: none; }
+  .btn-continue {
+    width: 100%; background: var(--lila); color: white; border: none;
+    padding: 15px; border-radius: 50px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
   }
-  .cta-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; font-style: italic; margin-bottom: 8px; }
-  .cta-box p { font-size: 12px; color: var(--blush); margin-bottom: 20px; }
-  .btn-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    background: #25D366;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .btn-whatsapp:hover { background: #128C7E; }
-
-  /* CONFIG NOTICE */
-  .config-notice {
-    background: rgba(184,150,90,0.1);
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    font-size: 12px;
-    color: var(--deep);
-    display: none;
-  }
-
-  @media (max-width: 480px) {
-    header { padding: 32px 16px 24px; }
-    main { padding: 32px 16px 60px; }
-  }
+  .btn-continue:hover { background: var(--lila-deep); }
+  .btn-skip { width: 100%; background: transparent; border: none; color: var(--lila); font-size: 13px; padding: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 6px; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Belier · Nail Care</div>
-  <h1>Diagnóstico Inteligente<br>de Uñas</h1>
-  <p>Tecnología de IA para recomendaciones personalizadas</p>
-</header>
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Belier <span>Diagnóstico de Uñas</span></div>
+</div>
 
-<main>
-  <!-- CONFIG NOTICE -->
-  <div class="config-notice" id="configNotice">
-    ⚙️ <strong>Configuración requerida:</strong> Actualiza la URL del backend en la línea indicada del código.
+<!-- SCREEN 0: INICIO -->
+<div class="screen active" id="screen-inicio">
+  <div class="hero">
+    <div class="hero-badge">✦ Diagnóstico personalizado ✦</div>
+    <h1>¿Qué necesitan tus uñas hoy?</h1>
+    <p>Responde unas preguntas y te recomendamos los productos Belier perfectos para ti.</p>
+    <button class="btn-start" onclick="goTo('screen-foto')">💅 Iniciar Diagnóstico</button>
   </div>
+</div>
 
-  <!-- STEPS BAR -->
-  <div class="steps-bar">
-    <div class="step-dot active" id="dot-1"></div>
-    <div class="step-dot" id="dot-2"></div>
-    <div class="step-dot" id="dot-3"></div>
-    <div class="step-dot" id="dot-4"></div>
+<!-- SCREEN 1: FOTO -->
+<div class="screen" id="screen-foto">
+  <div class="photo-wrap">
+    <div class="question-title" style="margin-bottom:6px;">Comparte una foto de tus uñas</div>
+    <div class="question-sub">Opcional — nos ayuda a darte una recomendación más precisa</div>
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" accept="image/*" onchange="handlePhoto(event)">
+      <div class="upload-icon">📸</div>
+      <h3>Subir foto de tus uñas</h3>
+      <p>Toca para seleccionar una imagen desde tu galería</p>
+    </div>
+    <img class="photo-preview" id="photoPreview" src="" alt="Vista previa">
+    <button class="btn-continue" onclick="goTo('screen-q1')">Continuar →</button>
+    <button class="btn-skip" onclick="goTo('screen-q1')">Saltar este paso</button>
   </div>
+</div>
 
-  <!-- STEP 1: UPLOAD -->
-  <div class="step active" id="step-1">
-    <div class="upload-area" id="uploadArea">
-      <input type="file" accept="image/*" id="fileInput" onchange="handleFile(event)">
-      <img class="preview-img" id="previewImg">
-      <div id="uploadContent">
-        <div class="upload-icon">💅</div>
-        <h3>Fotografía tus uñas</h3>
-        <p>Toma una foto clara con buena iluminación · JPG, PNG · Máx. 5MB</p>
-      </div>
-    </div>
-    <button class="btn-primary" id="btnStep1" onclick="goToStep(2)" disabled>
-      Continuar
-    </button>
+<!-- SCREEN 2: PREGUNTA 1 -->
+<div class="screen" id="screen-q1">
+  <div class="progress-wrap">
+    <div class="progress-label">Pregunta 1 de 5</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
   </div>
-
-  <!-- STEP 2: QUESTIONS 1-3 -->
-  <div class="step" id="step-2">
-    <div class="question-block">
-      <label>¿Con qué frecuencia te haces manicure?</label>
-      <div class="options" data-q="0">
-        <button class="option-btn" onclick="selectOption(this, 0)">Cada semana</button>
-        <button class="option-btn" onclick="selectOption(this, 0)">Cada 2-3 semanas</button>
-        <button class="option-btn" onclick="selectOption(this, 0)">Una vez al mes</button>
-        <button class="option-btn" onclick="selectOption(this, 0)">Muy ocasionalmente</button>
-      </div>
-    </div>
-    <div class="question-block">
-      <label>¿Usas esmalte o gel con frecuencia?</label>
-      <div class="options" data-q="1">
-        <button class="option-btn" onclick="selectOption(this, 1)">Siempre</button>
-        <button class="option-btn" onclick="selectOption(this, 1)">A veces</button>
-        <button class="option-btn" onclick="selectOption(this, 1)">Rara vez</button>
-        <button class="option-btn" onclick="selectOption(this, 1)">No uso</button>
-      </div>
-    </div>
-    <div class="question-block">
-      <label>¿Cuál es tu mayor preocupación con tus uñas?</label>
-      <div class="options" data-q="2">
-        <button class="option-btn" onclick="selectOption(this, 2)">Se quiebran fácilmente</button>
-        <button class="option-btn" onclick="selectOption(this, 2)">Crecen muy lento</button>
-        <button class="option-btn" onclick="selectOption(this, 2)">Se pelan o descaman</button>
-        <button class="option-btn" onclick="selectOption(this, 2)">Manchas o decoloración</button>
-        <button class="option-btn" onclick="selectOption(this, 2)">Cutículas secas</button>
-      </div>
-    </div>
-    <button class="btn-primary" id="btnStep2" onclick="goToStep(3)" disabled>
-      Continuar
-    </button>
-  </div>
-
-  <!-- STEP 3: QUESTIONS 4-5 -->
-  <div class="step" id="step-3">
-    <div class="question-block">
-      <label>¿Usas actualmente productos de tratamiento para uñas?</label>
-      <div class="options" data-q="3">
-        <button class="option-btn" onclick="selectOption(this, 3)">Sí, regularmente</button>
-        <button class="option-btn" onclick="selectOption(this, 3)">A veces</button>
-        <button class="option-btn" onclick="selectOption(this, 3)">No uso ninguno</button>
-      </div>
-    </div>
-    <div class="question-block">
-      <label>¿Cómo describirías tu estilo de vida respecto a las manos?</label>
-      <div class="options" data-q="4">
-        <button class="option-btn" onclick="selectOption(this, 4)">Trabajo de oficina</button>
-        <button class="option-btn" onclick="selectOption(this, 4)">Contacto frecuente con agua</button>
-        <button class="option-btn" onclick="selectOption(this, 4)">Trabajo manual</button>
-        <button class="option-btn" onclick="selectOption(this, 4)">Uso productos químicos</button>
-        <button class="option-btn" onclick="selectOption(this, 4)">Estilo de vida activo</button>
-      </div>
-    </div>
-    <button class="btn-primary" id="btnStep3" onclick="runDiagnosis()" disabled>
-      Analizar mis uñas
-    </button>
-  </div>
-
-  <!-- STEP 4: LOADING -->
-  <div class="step" id="step-loading">
-    <div class="loading">
-      <div class="spinner"></div>
-      <h3>Analizando tus uñas...</h3>
-      <p>La IA de Belier está procesando tu diagnóstico personalizado</p>
+  <div class="question-wrap">
+    <div class="question-title">¿Cuál es el estado principal de tus uñas ahora mismo?</div>
+    <div class="question-sub">Elige la opción que más se parece a tu situación</div>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'q1','debiles')">
+        <span class="option-emoji">💔</span>Débiles, se quiebran fácilmente
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q1','danadas')">
+        <span class="option-emoji">⚠️</span>Dañadas por acrílico, gel o retiro inadecuado
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q1','manchas')">
+        <span class="option-emoji">🟡</span>Con manchas, decoloración u hongos
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q1','lentas')">
+        <span class="option-emoji">🐢</span>No crecen o crecen muy lento
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q1','buenas')">
+        <span class="option-emoji">✅</span>En buen estado, solo quiero cuidarlas
+      </button>
     </div>
   </div>
+</div>
 
-  <!-- STEP 5: RESULTS -->
-  <div class="step" id="step-results">
-    <div class="result-header">
-      <div class="tag">Tu diagnóstico personalizado</div>
-      <h2>Estas son nuestras<br>recomendaciones para ti</h2>
-    </div>
-
-    <div class="diagnostico-box">
-      <p id="resultDiagnostico"></p>
-    </div>
-
-    <div class="problemas">
-      <div class="section-title">Problemas identificados</div>
-      <div id="resultProblemas"></div>
-    </div>
-
-    <div class="productos">
-      <div class="section-title">Productos recomendados</div>
-      <div id="resultProductos"></div>
-    </div>
-
-    <div class="consejo-box">
-      <div class="section-title">Consejo de experta</div>
-      <p id="resultConsejo"></p>
-    </div>
-
-    <div class="cta-box">
-      <h3>¿Lista para transformar tus uñas?</h3>
-      <p>Habla con nuestra asesora y consigue tus productos hoy</p>
-      <a id="whatsappBtn" href="#" class="btn-whatsapp" target="_blank">
-        💬 Pedir por WhatsApp
-      </a>
-    </div>
-
-    <button class="btn-secondary" onclick="restart()" style="width:100%; text-align:center; margin-top:24px;">
-      Hacer otro diagnóstico
-    </button>
+<!-- SCREEN 3: PREGUNTA 2 -->
+<div class="screen" id="screen-q2">
+  <div class="progress-wrap">
+    <div class="progress-label">Pregunta 2 de 5</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
   </div>
-</main>
+  <div class="question-wrap">
+    <div class="question-title">¿Qué tipo de esmalte usas normalmente?</div>
+    <div class="question-sub">Esto nos ayuda a recomendarte el producto correcto</div>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'q2','tradicional')">
+        <span class="option-emoji">💅</span>Esmalte tradicional
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q2','semipermanente')">
+        <span class="option-emoji">💡</span>Semipermanente (necesita lámpara)
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q2','efecto_gel')">
+        <span class="option-emoji">✨</span>Efecto gel sin lámpara
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q2','ninguno')">
+        <span class="option-emoji">🌿</span>Prefiero no usar esmalte, solo tratamiento
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 4: PREGUNTA 3 -->
+<div class="screen" id="screen-q3">
+  <div class="progress-wrap">
+    <div class="progress-label">Pregunta 3 de 5</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+  </div>
+  <div class="question-wrap">
+    <div class="question-title">¿Cómo está la piel alrededor de tus uñas?</div>
+    <div class="question-sub">Cutículas y piel de manos</div>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'q3','resequedad')">
+        <span class="option-emoji">🏜️</span>Muy seca, cutículas endurecidas
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q3','normal')">
+        <span class="option-emoji">👌</span>Normal, sin problemas
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q3','sensible')">
+        <span class="option-emoji">🌸</span>Sensible o con irritación frecuente
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q3','callos')">
+        <span class="option-emoji">🦶</span>Con callosidades (también cuido los pies)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 5: PREGUNTA 4 -->
+<div class="screen" id="screen-q4">
+  <div class="progress-wrap">
+    <div class="progress-label">Pregunta 4 de 5</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+  </div>
+  <div class="question-wrap">
+    <div class="question-title">¿Tienes alguna necesidad especial?</div>
+    <div class="question-sub">Selecciona la que más aplique</div>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'q4','hombre')">
+        <span class="option-emoji">👨</span>Soy hombre y quiero cuidado específico
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q4','spa')">
+        <span class="option-emoji">🧖</span>Quiero una rutina SPA completa en casa
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q4','profesional')">
+        <span class="option-emoji">💼</span>Soy manicurista / profesional
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q4','ninguna')">
+        <span class="option-emoji">💜</span>Ninguna en especial
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 6: PREGUNTA 5 -->
+<div class="screen" id="screen-q5">
+  <div class="progress-wrap">
+    <div class="progress-label">Pregunta 5 de 5</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+  <div class="question-wrap">
+    <div class="question-title">¿Qué es lo más importante para ti en un producto?</div>
+    <div class="question-sub">Tu prioridad nos ayuda a afinar la recomendación</div>
+    <div class="options">
+      <button class="option-btn" onclick="selectOption(this,'q5','salud')">
+        <span class="option-emoji">🌱</span>Que sea saludable y sin tóxicos
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q5','duracion')">
+        <span class="option-emoji">⏱️</span>Que dure mucho tiempo
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q5','tratamiento')">
+        <span class="option-emoji">💊</span>Que trate y repare mis uñas
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'q5','color')">
+        <span class="option-emoji">🎨</span>Que tenga variedad de colores
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 7: CARGANDO -->
+<div class="screen" id="screen-loading">
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <h2>Analizando tus uñas...</h2>
+    <p>Estamos preparando tu diagnóstico personalizado con los productos Belier perfectos para ti.</p>
+  </div>
+</div>
+
+<!-- SCREEN 8: RESULTADOS -->
+<div class="screen" id="screen-results">
+  <div class="results-hero">
+    <h2>Tu diagnóstico está listo 💜</h2>
+    <p id="results-summary">Basado en tus respuestas, aquí están los productos que necesitas.</p>
+  </div>
+  <div class="results-wrap">
+    <div class="ai-analysis" id="ai-analysis">
+      <h3>🔍 Análisis personalizado</h3>
+      <p id="analysis-text">Cargando análisis...</p>
+    </div>
+    <div class="results-section-title">Productos recomendados para ti</div>
+    <div id="products-container"></div>
+    <button class="btn-restart" onclick="restart()">↺ Hacer el diagnóstico de nuevo</button>
+  </div>
+</div>
 
 <script>
-  // ============================================================
-  // CONFIGURACIÓN — Actualiza esta URL cuando tengas Render listo
-  // ============================================================
-  const BACKEND_URL = '';
-  // ============================================================
+const WA_NUMBER = '573183421985';
+const answers = {};
+let photoBase64 = null;
 
-  let imageBase64 = null;
-  const answers = [null, null, null, null, null];
-  const answersCount = [0, 0, 0, 0, 0];
+// PORTAFOLIO COMPLETO ACTUALIZADO
+const PRODUCTS = {
+  sos_apio: {
+    name: 'Línea S.O.S – Base Apio',
+    label: 'Tratamiento',
+    icon: '🌿',
+    desc: 'Base restauradora con extracto de apio. Ideal para mejorar la estructura de la uña después de un mal retiro de sistemas artificiales.',
+    tags: ['danadas','tratamiento','profesional']
+  },
+  sos_apio_calcio: {
+    name: 'Línea S.O.S – Apio & Calcio',
+    label: 'Tratamiento',
+    icon: '💪',
+    desc: 'Genera más resistencia a la uña y revitaliza su salud. Perfecta para uñas débiles y quebradizas.',
+    tags: ['debiles','tratamiento','salud']
+  },
+  sos_apio_cebolla: {
+    name: 'Línea S.O.S – Apio & Cebolla',
+    label: 'Tratamiento',
+    icon: '🌱',
+    desc: 'Fortalece las uñas y revitaliza su apariencia. Recomendada para uñas con crecimiento lento.',
+    tags: ['lentas','debiles','tratamiento']
+  },
+  sos_apio_keratina: {
+    name: 'Línea S.O.S – Apio & Keratina',
+    label: 'Tratamiento',
+    icon: '✨',
+    desc: 'Elección ideal para uñas naturales. Fortalece con keratina y es apta para niños y hombres.',
+    tags: ['debiles','hombre','tratamiento','ninguno']
+  },
+  argan: {
+    name: 'Argán – Tratamiento Regenerador',
+    label: 'Tratamiento Intensivo',
+    icon: '💜',
+    desc: 'Tratamiento fortalecedor 3 en 1 (base, color y brillo) 21 FREE. Activa el crecimiento de uñas dañadas por sistemas artificiales. Protocolo de 7 días.',
+    tags: ['danadas','lentas','tratamiento','duracion']
+  },
+  esmalte_21free: {
+    name: 'Esmalte Profesional 21 FREE',
+    label: 'Color',
+    icon: '🌸',
+    desc: 'Más de 90 tonos deslumbrantes sin 21 tóxicos. Con extractos naturales de ajo, áloe, romero, tomillo y canela. Cruelty free.',
+    tags: ['buenas','color','tradicional','salud','ninguna']
+  },
+  biogel_master: {
+    name: 'BioGel Master 25 FREE',
+    label: 'Efecto Gel',
+    icon: '💎',
+    desc: 'Esmalte de secado rápido con efecto gel impecable. 72% origen vegetal, sin lámpara UV/LED. Dura 10-15 días. El más saludable del mercado.',
+    tags: ['efecto_gel','color','salud','duracion','buenas']
+  },
+  brillo_gel: {
+    name: 'Top Coat Brillo Gel',
+    label: 'Finalizador',
+    icon: '🔆',
+    desc: 'Laca selladora a base de gel. Aumenta el brillo del esmalte, prolonga la durabilidad y acelera el secado.',
+    tags: ['tradicional','efecto_gel','duracion','profesional']
+  },
+  finish_mate: {
+    name: 'Top Coat Finish Mate',
+    label: 'Finalizador',
+    icon: '🤍',
+    desc: 'Finalizador top coat que genera un tono mate elegante en las uñas. Perfecto para el look actual.',
+    tags: ['tradicional','color','ninguna']
+  },
+  brillo_secante: {
+    name: 'Top Coat Brillo Secante',
+    label: 'Finalizador',
+    icon: '⚡',
+    desc: 'Evita la fractura e intensifica el brillo del esmalte color. Genera secado más rápido que lo habitual.',
+    tags: ['tradicional','duracion','profesional']
+  },
+  removedor: {
+    name: 'Removedor de Esmalte',
+    label: 'Cuidado',
+    icon: '🫧',
+    desc: '100% libre de acetona y tolueno. Enriquecido con aceites naturales humectantes. No reseca tus uñas ni dedos. Disponible en 60ml, 120ml, 250ml, 1Lt y 4Lt.',
+    tags: ['danadas','salud','profesional','ninguna']
+  },
+  desengrasante: {
+    name: 'Desengrasante de Uñas',
+    label: 'Preparación',
+    icon: '🧴',
+    desc: 'Prepara las uñas antes del esmalte y garantiza su máxima duración. Con extracto de tomillo como agente cicatrizante y propiedades antibacteriales.',
+    tags: ['profesional','duracion','danadas','tradicional','efecto_gel']
+  },
+  crema_humectante: {
+    name: 'Crema Humectante',
+    label: 'Cuidado de Piel',
+    icon: '🌺',
+    desc: 'Con áloe vera, vitamina E, aceite de coco, argán y filtro solar. Facilita la regeneración celular de la piel. Sin parabenos. Disponible en 120ml y 1Lt.',
+    tags: ['resequedad','sensible','ninguna','spa']
+  },
+  aceite_almendras: {
+    name: 'Aceite de Almendras con Vitamina E',
+    label: 'Cuidado',
+    icon: '🌰',
+    desc: 'Fórmula ligera de rápida absorción con vitamina E y filtro solar. Protege la piel de agentes externos. Sin parabenos.',
+    tags: ['resequedad','sensible','spa','ninguna']
+  },
+  aceite_uva: {
+    name: 'Aceite de Uva Hipoalergénico',
+    label: 'Cuidado',
+    icon: '🍇',
+    desc: 'Ideal para pieles sensibles con alto grado de resequedad. Antioxidante, ayuda al aclaramiento de zonas oscuras.',
+    tags: ['sensible','resequedad','manchas','spa']
+  },
+  removedora_cuticula: {
+    name: 'Removedora de Cutícula',
+    label: 'Preparación',
+    icon: '💅',
+    desc: 'Elimina manchas en uñas, suaviza callosidades y protege e hidrata la piel. Resistente al agua. Disponible en crema y líquido.',
+    tags: ['resequedad','callos','profesional','danadas']
+  },
+  crema_exfoliante: {
+    name: 'Crema Exfoliante',
+    label: 'Cuidado',
+    icon: '💜',
+    desc: 'Exfoliante de uva o albaricoque. Sin parabenos. Remueve impurezas y células muertas para una piel renovada.',
+    tags: ['spa','resequedad','callos']
+  },
+  linea_spa: {
+    name: 'Línea Spa Pomelo Vainilla',
+    label: 'Ritual SPA',
+    icon: '🧖',
+    desc: 'Ritual completo: Sales relajantes de Manaure, Mascarilla Peel-Off con uchuva, Manticare (mantequilla humectante) y Vela Hidratante. Todo con ingredientes naturales colombianos.',
+    tags: ['spa','resequedad','ninguna']
+  },
+  removedor_callos: {
+    name: 'Removedor de Callos',
+    label: 'Pedicura',
+    icon: '🦶',
+    desc: 'Elimina durezas y callosidades mientras hidrata y protege la piel. Pies suaves y saludables con uso regular.',
+    tags: ['callos','spa','profesional']
+  },
+  for_men_humectante: {
+    name: 'For Men – Crema Humectante',
+    label: 'For Men',
+    icon: '👨',
+    desc: 'Altamente humectante, rápida absorción, libre de parabenos. Fórmula especial para el cuidado masculino.',
+    tags: ['hombre']
+  },
+  for_men_aceite: {
+    name: 'For Men – Aceite Vitamina E',
+    label: 'For Men',
+    icon: '💪',
+    desc: 'Mezcla de humectantes con Vitamina E y filtro solar para mayor elasticidad de la piel. Protege de agentes externos.',
+    tags: ['hombre']
+  },
+  for_men_exfoliante: {
+    name: 'For Men – Crema Exfoliante',
+    label: 'For Men',
+    icon: '🧴',
+    desc: 'Limpieza profunda sin enjuague. Fragancia premium, libre de parabenos. Hidratación excepcional en manos y pies.',
+    tags: ['hombre','callos']
+  }
+};
 
-  function handleFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      imageBase64 = ev.target.result;
-      const img = document.getElementById('previewImg');
-      img.src = imageBase64;
-      img.style.display = 'block';
-      document.getElementById('uploadContent').style.display = 'none';
-      document.getElementById('btnStep1').disabled = false;
-    };
-    reader.readAsDataURL(file);
+function handlePhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    photoBase64 = ev.target.result.split(',')[1];
+    const preview = document.getElementById('photoPreview');
+    preview.src = ev.target.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function selectOption(btn, question, value) {
+  const parent = btn.closest('.options');
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[question] = value;
+  const nextMap = { q1: 'screen-q2', q2: 'screen-q3', q3: 'screen-q4', q4: 'screen-q5', q5: 'screen-loading' };
+  setTimeout(() => {
+    goTo(nextMap[question]);
+    if (question === 'q5') runDiagnosis();
+  }, 350);
+}
+
+function getRecommendedProducts() {
+  const tags = [answers.q1, answers.q2, answers.q3, answers.q4, answers.q5].filter(Boolean);
+  const scored = {};
+  Object.entries(PRODUCTS).forEach(([key, product]) => {
+    let score = 0;
+    tags.forEach(tag => { if (product.tags.includes(tag)) score++; });
+    if (score > 0) scored[key] = { ...product, score };
+  });
+
+  // Hombre: solo for men + keratina
+  if (answers.q4 === 'hombre') {
+    return Object.entries(scored)
+      .filter(([k]) => k.startsWith('for_men') || k === 'sos_apio_keratina')
+      .sort((a, b) => b[1].score - a[1].score)
+      .slice(0, 4).map(([k, v]) => ({ key: k, ...v }));
   }
 
-  function selectOption(btn, qIndex) {
-    const group = btn.closest('.options');
-    group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    answers[qIndex] = btn.textContent;
-    checkStep(qIndex);
-  }
+  return Object.entries(scored)
+    .sort((a, b) => b[1].score - a[1].score)
+    .slice(0, 5).map(([k, v]) => ({ key: k, ...v }));
+}
 
-  function checkStep(qIndex) {
-    if (qIndex <= 2) {
-      const allAnswered = answers[0] && answers[1] && answers[2];
-      document.getElementById('btnStep2').disabled = !allAnswered;
-    } else {
-      const allAnswered = answers[3] && answers[4];
-      document.getElementById('btnStep3').disabled = !allAnswered;
-    }
-  }
+function buildWAMessage(product) {
+  const stateMap = {
+    debiles: 'uñas débiles', danadas: 'uñas dañadas por sistemas artificiales',
+    manchas: 'manchas en uñas', lentas: 'crecimiento lento', buenas: 'uñas en buen estado'
+  };
+  const estado = stateMap[answers.q1] || 'el cuidado de mis uñas';
+  return encodeURIComponent(`Hola Belier 💜 Hice el diagnóstico de uñas en la app y me recomendaron el *${product.name}* para ${estado}. ¿Me pueden dar más información y cómo comprarlo?`);
+}
 
-  function goToStep(n) {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById(`step-${n}`).classList.add('active');
-    updateDots(n);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+function getAnalysisText() {
+  const texts = {
+    danadas: 'Tus uñas muestran señales de daño estructural por sistemas artificiales. El tratamiento prioritario es restaurar la lámina ungueal con nuestras bases S.O.S y el Argán Regenerador antes de aplicar cualquier color.',
+    debiles: 'Tus uñas necesitan refuerzo estructural. Te recomendamos iniciar con una base restauradora S.O.S y complementar con el desengrasante para garantizar la máxima adherencia y duración.',
+    manchas: 'La decoloración o manchas pueden indicar restos de productos o inicio de hongos. El Aceite de Uva antiox idante y el removedor sin acetona son tu punto de partida.',
+    lentas: 'Para activar el crecimiento te recomendamos el Tratamiento Argán que estimula la lámina ungueal, combinado con la base Apio & Cebolla que potencia la renovación celular.',
+    buenas: 'Tus uñas están en buen estado — el objetivo es mantenerlas así. Una rutina con esmalte saludable, top coat protector y crema humectante es todo lo que necesitas.'
+  };
+  return texts[answers.q1] || 'Basado en tus respuestas, seleccionamos los productos Belier más adecuados para el estado y necesidades de tus uñas.';
+}
 
-  function updateDots(step) {
-    for (let i = 1; i <= 4; i++) {
-      const dot = document.getElementById(`dot-${i}`);
-      dot.classList.remove('active', 'done');
-      if (i < step) dot.classList.add('done');
-      else if (i === step) dot.classList.add('active');
-    }
-  }
+async function runDiagnosis() {
+  document.getElementById('analysis-text').textContent = getAnalysisText();
 
-  async function runDiagnosis() {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-loading').classList.add('active');
-    updateDots(4);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
+  // Intentar análisis con IA si hay foto
+  if (photoBase64) {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/diagnose`, {
+      const response = await fetch('/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: imageBase64, answers })
+        body: JSON.stringify({ image: photoBase64, answers })
       });
-
-      if (!response.ok) throw new Error('Error del servidor');
-      const result = await response.json();
-      showResults(result);
-    } catch (err) {
-      console.error(err);
-      alert('Hubo un error al procesar el diagnóstico. Por favor intenta de nuevo.');
-      goToStep(1);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.analysis) {
+          document.getElementById('analysis-text').textContent = data.analysis;
+        }
+      }
+    } catch (e) {
+      // Usa análisis local si falla la IA
     }
   }
 
-  function showResults(result) {
-    document.getElementById('resultDiagnostico').textContent = result.diagnostico;
+  const products = getRecommendedProducts();
+  const container = document.getElementById('products-container');
+  container.innerHTML = '';
 
-    const problemasEl = document.getElementById('resultProblemas');
-    problemasEl.innerHTML = result.problemas.map(p =>
-      `<div class="problema-item">${p}</div>`
-    ).join('');
-
-    const productosEl = document.getElementById('resultProductos');
-    productosEl.innerHTML = result.productos.map(p => `
-      <div class="producto-card">
-        <div class="producto-top">
-          <div class="producto-nombre">${p.nombre}</div>
-          <span class="prioridad ${p.prioridad}">${p.prioridad}</span>
+  products.forEach(product => {
+    const waMsg = buildWAMessage(product);
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <div class="product-header">
+        <div class="product-icon">${product.icon}</div>
+        <div class="product-meta">
+          <span class="product-label">${product.label}</span>
+          <div class="product-name">${product.name}</div>
         </div>
-        <div class="producto-razon">${p.razon}</div>
       </div>
-    `).join('');
+      <div class="product-desc">${product.desc}</div>
+      <a href="${waUrl}" target="_blank" style="text-decoration:none;">
+        <button class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </button>
+      </a>
+    `;
+    container.appendChild(card);
+  });
 
-    document.getElementById('resultConsejo').textContent = result.consejo;
+  setTimeout(() => goTo('screen-results'), 2200);
+}
 
-    const productNames = result.productos.map(p => p.nombre).join(', ');
-    const msg = `Hola! Acabo de hacer el diagnóstico de uñas Belier y me recomendaron: ${productNames}. ¿Me pueden ayudar con información y precios?`;
-    document.getElementById('whatsappBtn').href = `https://wa.me/573183421985?text=${encodeURIComponent(msg)}`;
-
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-results').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function restart() {
-    imageBase64 = null;
-    for (let i = 0; i < 5; i++) answers[i] = null;
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelectorAll('.btn-primary').forEach(b => b.disabled = true);
-    document.getElementById('previewImg').style.display = 'none';
-    document.getElementById('uploadContent').style.display = 'block';
-    document.getElementById('fileInput').value = '';
-    goToStep(1);
-  }
+function restart() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  photoBase64 = null;
+  document.getElementById('photoPreview').style.display = 'none';
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  goTo('screen-inicio');
+}
 </script>
 </body>
 </html>
-
