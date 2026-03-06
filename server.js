@@ -7,15 +7,30 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Sirve el frontend (index.html)
+// Timestamp único del deploy — fuerza cache bust en cada nuevo despliegue
+const DEPLOY_ID = Date.now().toString();
+
+// Middleware anti-caché para TODAS las respuestas
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  res.setHeader('X-Deploy-ID', DEPLOY_ID);
+  next();
+});
+
+// Ruta explícita para index.html — lee el archivo en cada request (nunca desde caché de memoria)
+app.get('/', (req, res) => {
+  const indexPath = path.join(process.cwd(), 'index.html');
+  res.sendFile(indexPath, { etag: false, lastModified: false });
+});
+
+// Resto de archivos estáticos (sin caché)
 app.use(express.static(path.join(process.cwd()), {
   etag: false,
   lastModified: false,
-  setHeaders: (res) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-  }
+  index: false  // index.html ya lo maneja la ruta '/' arriba
 }));
 
 // CATÁLOGO REAL BELIER - Actualizado según portafolio oficial
